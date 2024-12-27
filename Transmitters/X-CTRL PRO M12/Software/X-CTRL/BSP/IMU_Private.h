@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 typedef struct{
-    float AngleReal;
-    float Angle;
-    int16_t Limit;
+    float AngleReal;    //!实际测量的角度值
+    float Angle;        //!处理后的角度值（如滤波或修正后的值）
+    int16_t Limit;      //!角度限制值（可能是上限或阈值）
 }IMU_Angle_TypeDef;
 
 typedef struct{

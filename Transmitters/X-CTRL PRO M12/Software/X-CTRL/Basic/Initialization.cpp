@@ -12,26 +12,36 @@ X_CTRL_TypeDef CTRL;
   * @param  无
   * @retval true成功 false失败
   */
+//!eeprom中存放的数据
+//!CTRL.JS_L,
+//!CTRL.JS_R,
+//!CTRL.ModelIndex,
+//!XC_Model,
+//!IMU_Axis.Pitch.Limit,
+//!IMU_Axis.Roll.Limit,
+//!IMU_Axis.Yaw.Limit,
 bool Value_Init()
 {
     DEBUG_FUNC_LOG();
     uint8_t eep_ret = EEPROM_Init();
     
-    EEPROM_REG_VALUE(CTRL.JS_L);
-    EEPROM_REG_VALUE(CTRL.JS_R);
-    EEPROM_REG_VALUE(CTRL.ModelIndex);
-    EEPROM_REG_VALUE(XC_Model);
+    //! 注册需要掉电储保存的变量,暂时写到了DataReg_List这里
+    EEPROM_REG_VALUE(CTRL.JS_L);//! 左摇杆信息
+    EEPROM_REG_VALUE(CTRL.JS_R);//! 右摇杆信息
+    EEPROM_REG_VALUE(CTRL.ModelIndex);//! 当前模型索引
+    EEPROM_REG_VALUE(XC_Model);//!模型功能配置
     
-    EEPROM_REG_VALUE(IMU_Axis.Pitch.Limit);
-    EEPROM_REG_VALUE(IMU_Axis.Roll.Limit);
-    EEPROM_REG_VALUE(IMU_Axis.Yaw.Limit);
+    EEPROM_REG_VALUE(IMU_Axis.Pitch.Limit);//! 俯仰限幅
+    EEPROM_REG_VALUE(IMU_Axis.Roll.Limit);//! 横滚限幅
+    EEPROM_REG_VALUE(IMU_Axis.Yaw.Limit);//! 航向限幅
 
+    //!eeprom初始化失败
     if(eep_ret != 0)
     {
         Serial.printf("EEPROM error! (0x%x)\r\n", eep_ret);
         return false;
     }
-
+    //!读取eeprom信息，如果失败（如果之前eeprom中没有存放数据），使用默认参数初始化
     if(!EEPROM_ReadAll())
     {
         X_CTRL_SetDefault();
@@ -46,7 +56,13 @@ bool Value_Init()
 
 void X_CTRL_SetDefault()
 {
+    //!CTRL.ModelIndex = 0;
+    //!XC_Model = 0
+    //!CTRL.CH_Config = 0
+    //!CTRL.RF_Config = 0
+    //!CTRL.State = 0
     Model_SetDefault();
+    //!开启蜂鸣器，震动马达，握手，回传功能
     CTRL.State->IMU = false;
     CTRL.State->Sound = true;
     CTRL.State->LRA_Vibrate = true;
@@ -54,8 +70,11 @@ void X_CTRL_SetDefault()
     CTRL.State->Handshake = true;
     CTRL.State->Passback = true;
     CTRL.State->FHSS = false;
+    //!设置摇杆默认值
     Joystick_SetDefault();
+    //!设置通道默认值
     Com_ChannelSetDefault();
+    //!设置IMU默认值
     IMU_LimitSetDefault();
 }
 
@@ -70,8 +89,11 @@ void X_CTRL_Init()
     DEBUG_FUNC_LOG();
     
     I2C_Scan(false);
+    
     Power_Init();
+    //!读取eeprom信息，如果失败（如果之前eeprom中没有存放数据），使用默认参数初始化
     Value_Init();
+
     Model_Init();
     Display_Init();
     Button_Init();

@@ -147,8 +147,8 @@ bool EEPROM_Register(void *pdata, uint16_t size)
     if(DataReg_Cnt == RegDataList_MAX)
         return false;
     
-    DataReg_List[DataReg_Cnt].pData = (uint8_t*)pdata;
-    DataReg_List[DataReg_Cnt].Size = size;
+    DataReg_List[DataReg_Cnt].pData = (uint8_t*)pdata;//!用户数据地址
+    DataReg_List[DataReg_Cnt].Size = size;//!用户数据大小
     DataReg_Cnt++;
     return true;
 }
@@ -236,10 +236,12 @@ bool EEPROM_ReadAll()
     DS_DEBUG(__FUNCTION__);
     
     /*初始化帧头*/
+    //!用户数据总长, 用户数据总个数, 用户数据校验和
     EEPROM_DataHead_t head;
+    //!清空帧头
     memset(&head, 0, sizeof(head));
     
-    /*获取帧头信息*/
+    /*从EEPROM中获取帧头信息*/
     EEPROM_Read(0, &head, sizeof(head));
     DS_DEBUG("Read head");
     DS_DEBUG_FMT(".DataLength   = %d\r\n", head.DataLength);
@@ -253,7 +255,7 @@ bool EEPROM_ReadAll()
     /*移到用户数据区*/
     DataReg_OffsetAddr = sizeof(head);
 
-    /*计算校验和*/
+    /*计算用户数据的校验和*/
     for(uint16_t i = 0; i < head.DataLength; i++)
     {
         /*读取是否超时*/
@@ -289,7 +291,7 @@ bool EEPROM_ReadAll()
     {
         uint8_t high = EEPROM_ReadNext();
         uint8_t low = EEPROM_ReadNext();
-
+        //!用户数据大小
         uint16_t UserSize = high << 8 | low;
 
         /*/校验是否与用户注册列表匹配*/

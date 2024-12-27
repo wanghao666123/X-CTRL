@@ -75,6 +75,9 @@ void Model_SetDefault()
 {
     memset(XC_Model, 0, sizeof(XC_Model));
     CTRL.ModelIndex = 0;
+    //!CTRL.CH_Config = 0
+    //!CTRL.RF_Config = 0
+    //!CTRL.State = 0
     Model_SetAttachCTRL(0);
 }
 

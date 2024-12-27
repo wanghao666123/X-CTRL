@@ -91,6 +91,7 @@ void Com_ChannelInit()
   * @param  нч
   * @retval нч
   */
+//!0~3:SW_E~SW_H, 4~7:JS_L.X~JS_R.Y
 void Com_ChannelSetDefault()
 {
     RCX::ChannelSetAttachEnable(true);

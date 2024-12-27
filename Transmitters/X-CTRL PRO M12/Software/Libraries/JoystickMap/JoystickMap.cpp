@@ -6,12 +6,12 @@ JoystickMap::JoystickMap(int16_t* table, uint16_t size)
     InputMin = 0;
     InputMid = 4095 / 2;
     InputMax = 4095;
-    InputDeadZone = 50;
-    OutputMax = 1000;
+    InputDeadZone = 50;//!摇杆死区
+    OutputMax = 1000;//!输出的最大值
 
     CurveTable = table;
     CurveTableSize = size;
-    
+    //!设置曲线 由于是两个5，所以这里的曲线是线性的
     SetCurve(5, 5);
 }
 
@@ -28,6 +28,7 @@ void JoystickMap::SetInputReference(int16_t min, int16_t mid, int16_t max)
 
 void JoystickMap::SetCurve(float startK, float endK)
 {
+    //!101
     for(int i = 0; i < CurveTableSize; i++)
     {
         CurveTable[i] = NonlinearMap(i, 0, CurveTableSize - 1, 0, OutputMax, startK, endK);
@@ -106,20 +107,24 @@ void JoystickMap::SetInput(int16_t in_val)
         Output = 0;
     }
 }
-
+//!该函数将输入值从输入范围 [in_min, in_max] 映射到输出范围 [out_min, out_max]
+//!线性映射
 float JoystickMap::LinearMap(float value, float in_min, float in_max, float out_min, float out_max)
 {
     return (((value) - (in_min)) * ((out_max) - (out_min)) / ((in_max) - (in_min)) + (out_min));
 }
-
+//!i ==> (0~100)
+//!i,0,100,0,1000,5,5
 float JoystickMap::NonlinearMap(float value, float in_min, float in_max, float out_min, float out_max, float startK, float endK)
 {
     if(abs(startK - endK) < 0.001f)
         return LinearMap(value, in_min, in_max, out_min, out_max);
-
+    //!如果 startK 和 endK 比较小（接近零），则 exp(startK) 和 exp(endK) 的值会接近 1，这样输出值变化会比较平缓；而如果 startK 和 endK 比较大，exp(startK) 和 exp(endK) 的值会显著增大，导致更快的输出变化
     float stY = exp(startK);
     float edY = exp(endK);
+    //!使用线性映射将输入值 value 映射到 [startK, endK] 范围内
     float x = LinearMap(value, in_min, in_max, startK, endK);
-
+    //!exp(x) 的值在 [exp(startK), exp(endK)] 范围内变化
+    //!速度小的时候，exp(x) 的值接近 exp(startK)，输出值变化平缓；速度大的时候，exp(x) 的值接近 exp(endK)，输出值变化快
     return LinearMap(exp(x), stY, edY, out_min, out_max);
 }

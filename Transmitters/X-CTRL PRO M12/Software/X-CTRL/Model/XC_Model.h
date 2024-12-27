@@ -8,9 +8,9 @@
 
 typedef struct{
     char                 Name[XC_MODEL_NAME_MAX];
-    XC_CH_Config_TypeDef CH_Config;
-    XC_RF_Config_TypeDef RF_Config;
-    XC_State_TypeDef     State;
+    XC_CH_Config_TypeDef CH_Config;//!通道是否反向和映射
+    XC_RF_Config_TypeDef RF_Config;//!速度，频率，地址
+    XC_State_TypeDef     State;//!功能使能
 }XC_Model_TypeDef;
 
 extern XC_Model_TypeDef XC_Model[XC_MODEL_NUM];

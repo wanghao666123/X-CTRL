@@ -91,3 +91,6 @@ https://github.com/FASTSHIFT/X-CTRL
 * 3.去除lv_settings的sw初始化动画
 * 4.去除Menu的透明度渐变动画
 * 5.更新IP5108库，修复了一些寄存器位定义错误
+
+## 疑问
+* 1. eeprom中在哪里存储，存储的数据有些什么

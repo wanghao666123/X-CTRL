@@ -126,7 +126,8 @@ float CustomFilter::Next(float value)
     CrtPos = (CrtPos + 1) % Pole;
     return val;
 }
-
+//! 一阶低通滤波器 0.01f, 10hz
+//!cutoff: 截止频率，单位是赫兹（Hz）。该频率表示滤波器的截止点，低于此频率的信号会通过，超过此频率的信号会被衰减
 PT1Filter::PT1Filter(float dt, float cutoff) : DigitalFilter(dt)
 {
     IsFirst = true;

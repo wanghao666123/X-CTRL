@@ -71,6 +71,7 @@
 //   be identical).
 // - pageSize is the EEPROM's page size in bytes.
 // - eepromAddr is the EEPROM's I2C address and defaults to 0x50 which is common.
+//!extEEPROM eeprom(kbits_256, 1, 64, 0x50)
 extEEPROM::extEEPROM(eeprom_size_t deviceCapacity, byte nDevice, unsigned int pageSize, uint8_t eepromAddr)
 {
     _dvcCapacity = deviceCapacity;
@@ -103,7 +104,7 @@ byte extEEPROM::begin(twiClockFreq_t twiFreq, TwoWire *_comm)
 {
     communication = _comm;
     communication->begin();
-    communication->setClock(twiFreq);
+    communication->setClock(twiFreq);//!设置IIC通信速率 100Khz
     communication->beginTransmission(_eepromAddr);
     if (_nAddrBytes == 2) communication->write((byte)0);      //high addr byte
     communication->write((byte)0);                            //low addr byte
