@@ -582,6 +582,7 @@ bool NRF_Basic::IsDetect()
             detect = false;
         }
     }
+    //!设置地址都为0
     SetAddress(addr);
     
     return detect;

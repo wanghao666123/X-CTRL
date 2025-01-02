@@ -32,6 +32,8 @@ typedef struct
     /*通道 RCX_CHANNEL_NUM * 2 Bytes*/
     int16_t Channel[RCX_CHANNEL_NUM];
     
+    //!16 + 1 + 3 = 20 + 1 = 21
+    //!32 - 21 = 11
     /*用户数据*/
     uint8_t UserData[27 - (RCX_CHANNEL_NUM * sizeof(uint16_t))];
 

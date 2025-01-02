@@ -28,12 +28,13 @@ ReInit:
         togglePin(LED_Pin);
         goto ReInit;
     }
-    
+    //!slave端初始化
     RCX::Handshake::Init(&nrfTRM, &nrfFHSS);
 }
 
 void Task_ComHandler()
 {
+    //!虽然线程启动，但是需要等待握手成功才会真正启动
     if(RCX::Handshake::GetPassBack_Enable())
     {
         RCX::LoadTxPack(NRF_TxBuff);

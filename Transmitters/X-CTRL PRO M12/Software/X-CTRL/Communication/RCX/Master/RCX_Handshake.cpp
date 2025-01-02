@@ -182,9 +182,9 @@ uint8_t Handshake::Process(uint8_t state, uint8_t slaveSelect, CMD_Type cmd)
         TxSetObjectID(Master.ID);
 
         nrfTRM->Basic->SetRF_Enable(false);
-        nrfTRM->Basic->SetAddress(Master.Address);//应用新地址
-        nrfTRM->Basic->SetFreqency(Master.FerqList[0]);//应用新频道
-        nrfTRM->Basic->SetSpeed(Master.Speed);//应用新通信速
+        nrfTRM->Basic->SetAddress(Master.Address);//应用新地址 这个是随机的
+        nrfTRM->Basic->SetFreqency(Master.FerqList[0]);//应用新频道 这个是随机的
+        nrfTRM->Basic->SetSpeed(Master.Speed);//应用新通信速  这个应该是通过界面设置的
         //nrfTRM->Basic->SetAutoRetry(0, 15);
         nrfTRM->Basic->SetAutoRetryTimeout(NRF_ComProcess_TimeMs - 3);
         nrfTRM->Basic->TX_Mode();

@@ -12,6 +12,7 @@ static void mtmMain_TimerCallback()
 
 static void setup()
 {
+    //!初始化
     X_CTRL_Init();
     
     mtmMain.Register(Com_Update, 10);

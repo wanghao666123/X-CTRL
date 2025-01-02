@@ -316,7 +316,7 @@ static void Setup()
 
     nrf.SetRF_Enable(true);
     RCX::ChannelReset();
-    Com_SetEnable(true);
+    Com_SetEnable(true);//!这个才是决定是否发送数据的关键
 
     TabView_Creat();
     Joystick_Creat(&JoysticksGrp[0], tabGrp[0], LV_ALIGN_IN_LEFT_MID, 10, 0);

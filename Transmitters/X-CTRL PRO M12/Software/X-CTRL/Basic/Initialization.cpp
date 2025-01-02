@@ -93,19 +93,26 @@ void X_CTRL_Init()
     Power_Init();
     //!读取eeprom信息，如果失败（如果之前eeprom中没有存放数据），使用默认参数初始化
     Value_Init();
-
+    //!将CTRL指向XC_Model
     Model_Init();
+    //!显示屏初始化
     Display_Init();
+    //!按键初始化
     Button_Init();
+    //!蜂鸣器初始化
     Audio_Init();
+    //!IMU初始化
     IMU_Init();
+    //!摇杆初始化 开启adc dma
     Joystick_Init();
+    //!蓝牙初始化
     Bluetooth_Init();
+    //!震动马达初始化
     MotorLRA_Init();
     MotorERM_Init();
-
+    //!通道初始化
     Com_ChannelInit();
-    
+    //!nrf24l01初始化
     if(Com_Init())
     {
         Serial.println("Communication init success");
