@@ -47,7 +47,7 @@ void Task_ComHandler()
             nrfTRM.RecvTran(NRF_RxBuff, NRF_TxBuff);
         }
         
-        __IntervalExecute(nrf.GetRSSI(), 2000);
+        __IntervalExecute(nrf.GetRSSI(), 2000);//!2000ms统计一次丢包率
     }
     else
     {

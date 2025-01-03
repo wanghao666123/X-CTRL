@@ -120,7 +120,7 @@ void NRF_FHSS::RxProcess(void* rxbuff, void* txbuff)
         }
         Basic->RX_Mode();
     }
-    else if(Basic->RF_State == Basic->State_RX)
+    else if(Basic->RF_State == Basic->State_RX)//!刚开始是接收模式
     {
         if(Basic->Recv(rxbuff))
         {

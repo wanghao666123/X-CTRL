@@ -87,7 +87,7 @@ static void Com_TxRxProcess()
         nrfTRM.TranRecv(NRF_TxBuff, NRF_RxBuff);
     }
 
-    if(CTRL.State->Passback)
+    if(CTRL.State->Passback)//!这个应该是反馈
     {
         RCX::RxLoadPack(NRF_RxBuff);
         Com_PassbackProcess(RCX::RxGetSignalLost() ? PBS_Error : PBS_Loop);
@@ -101,6 +101,7 @@ static void Com_TxRxProcess()
   */
 void Com_Update()
 {
+    //!握手成功之后Com_Enable == True
     if(!Com_Enable)
         return;
     

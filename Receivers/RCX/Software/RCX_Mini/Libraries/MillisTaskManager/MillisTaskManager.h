@@ -55,7 +55,7 @@ public:
 private:
     MillisTaskManager_TypeDef* TaskList;//任务列表
     TaskNum_t TaskNum_MAX;//任务列表长度
-    bool PriorityEnable;
+    bool PriorityEnable;//!是否开启优先级
     void TaskClear(TaskNum_t ID);//清除任务
 };
 

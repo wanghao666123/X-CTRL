@@ -84,7 +84,7 @@ bool MillisTaskManager::TaskFind(void_TaskFunction_t Function, TaskNum_t *ID)
 }
 
 /**
-  * @brief  寻找任务,返回任务注册地址
+  * @brief  寻找任务,返回任务注册地址 应该是任务id
   * @param  Function:任务函数指针
   * @retval -1:未找到 ; 其他:任务ID
   */

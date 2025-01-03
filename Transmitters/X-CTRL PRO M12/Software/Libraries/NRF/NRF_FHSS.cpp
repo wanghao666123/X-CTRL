@@ -82,7 +82,7 @@ void NRF_FHSS::TxProcess(void* txbuff, void* rxbuff)
         Basic->TX_Mode();
         Basic->Tran(txbuff);
     }
-    else if(Basic->RF_State == Basic->State_TX)
+    else if(Basic->RF_State == Basic->State_TX)//!¸Õ¿ªÊ¼Ê±State_TX
     {
         if(status & Basic->TX_DS)
         {
